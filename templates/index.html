@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Message Board</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: auto;
+        }
+        #messages {
+            border: 1px solid #ccc;
+            padding: 10px;
+            margin-bottom: 10px;
+            height: 300px;
+            overflow-y: scroll;
+        }
+        input, button {
+            margin: 5px 0;
+            padding: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Message Board</h1>
+    <div id="messages"></div>
+    <input type="text" id="username" placeholder="Enter your username" required>
+    <input type="text" id="message" placeholder="Enter your message" required>
+    <button onclick="sendMessage()">Send Message</button>
+
+    <script>
+        function fetchMessages() {
+            fetch('/get_messages')
+                .then(response => response.json())
+                .then(data => {
+                    const messagesDiv = document.getElementById('messages');
+                    messagesDiv.innerHTML = data.map(msg => `<p>${msg}</p>`).join('');
+                });
+        }
+
+        function sendMessage() {
+            const username = document.getElementById('username').value || generateRandomUsername();
+            const message = document.getElementById('message').value;
+            if (!message) return alert('Message cannot be empty!');
+
+            fetch('/send_message', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ username, message }),
+            }).then(response => {
+                if (response.ok) {
+                    document.getElementById('message').value = '';
+                    fetchMessages();
+                } else {
+                    alert('Error sending message.');
+                }
+            });
+        }
+
+        function generateRandomUsername() {
+            const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+            let username = '';
+            for (let i = 0; i < 8; i++) {
+                username += characters.charAt(Math.floor(Math.random() * characters.length));
+            }
+            document.getElementById('username').value = username;
+            return username;
+        }
+
+        // Fetch messages on load
+        fetchMessages();
+        // Refresh messages every 5 seconds
+        setInterval(fetchMessages, 5000);
+    </script>
+</body>
+</html>
