@@ -9,7 +9,8 @@ app.secret_key = 'your_secret_key'  # Change this to a random secret key
 
 # Directory for log files
 LOG_DIR = 'logs'
-os.makedirs(LOG_DIR, exist_ok=True)
+if not os.path.exists(LOG_DIR):
+    os.makedirs(LOG_DIR)
 
 # Load existing messages
 def load_messages():
@@ -26,8 +27,11 @@ def save_message(username, message):
     today = datetime.now().strftime('%Y-%m-%d')
     log_file = os.path.join(LOG_DIR, f'{today}.txt')
     timestamp = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
-    with open(log_file, 'a') as file:
-        file.write(f'{timestamp} - {username}: {message}\n')
+    try:
+        with open(log_file, 'a') as file:
+            file.write(f'{timestamp} - {username}: {message}\n')
+    except Exception as e:
+        print(f'Error writing to log file: {e}')
 
 @app.route('/')
 def index():
