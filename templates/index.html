@@ -9,24 +9,50 @@
             font-family: Arial, sans-serif;
             max-width: 600px;
             margin: auto;
+            background-color: #f4f4f4;
+            padding: 20px;
         }
         #messages {
             border: 1px solid #ccc;
             padding: 10px;
             margin-bottom: 10px;
+            background: #fff;
+            border-radius: 5px;
             height: 300px;
             overflow-y: scroll;
+        }
+        .message {
+            margin-bottom: 10px;
+            padding: 5px;
+            border-bottom: 1px solid #eee;
+        }
+        .timestamp {
+            font-size: 0.8em;
+            color: #888;
         }
         input, button {
             margin: 5px 0;
             padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+        }
+        input[type="text"] {
+            width: calc(100% - 22px);
+        }
+        button {
+            width: 100%;
+            background-color: #007bff;
+            color: white;
+            border: none;
+        }
+        button:hover {
+            background-color: #0056b3;
         }
     </style>
 </head>
 <body>
     <h1>Message Board</h1>
     <div id="messages"></div>
-    <input type="text" id="username" placeholder="Enter your username" required>
     <input type="text" id="message" placeholder="Enter your message" required>
     <button onclick="sendMessage()">Send Message</button>
 
@@ -36,21 +62,23 @@
                 .then(response => response.json())
                 .then(data => {
                     const messagesDiv = document.getElementById('messages');
-                    messagesDiv.innerHTML = data.map(msg => `<p>${msg}</p>`).join('');
+                    messagesDiv.innerHTML = data.map(msg => {
+                        const [timestamp, ...rest] = msg.split(' - ');
+                        return `<div class="message"><span class="timestamp">${timestamp}</span> - ${rest.join(' - ')}</div>`;
+                    }).join('');
                 });
         }
 
         function sendMessage() {
-            const username = document.getElementById('username').value || generateRandomUsername();
             const message = document.getElementById('message').value;
-            if (!message) return alert('Message cannot be empty!');
+            if (!message) return;
 
             fetch('/send_message', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ username, message }),
+                body: JSON.stringify({ message }),
             }).then(response => {
                 if (response.ok) {
                     document.getElementById('message').value = '';
@@ -61,15 +89,12 @@
             });
         }
 
-        function generateRandomUsername() {
-            const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-            let username = '';
-            for (let i = 0; i < 8; i++) {
-                username += characters.charAt(Math.floor(Math.random() * characters.length));
+        document.getElementById('message').addEventListener('keypress', function(event) {
+            if (event.key === 'Enter') {
+                event.preventDefault();
+                sendMessage();
             }
-            document.getElementById('username').value = username;
-            return username;
-        }
+        });
 
         // Fetch messages on load
         fetchMessages();

@@ -1,9 +1,11 @@
-from flask import Flask, request, jsonify, render_template
+from flask import Flask, request, jsonify, render_template, session
 import os
 import random
 import string
+from datetime import datetime
 
 app = Flask(__name__)
+app.secret_key = 'your_secret_key'  # Change this to a random secret key
 
 # File to store messages
 MESSAGE_FILE = 'messages.txt'
@@ -22,18 +24,21 @@ def load_messages():
 
 # Save a new message
 def save_message(username, message):
+    timestamp = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
     with open(MESSAGE_FILE, 'a') as file:
-        file.write(f'{username}: {message}\n')
+        file.write(f'{timestamp} - {username}: {message}\n')
 
 @app.route('/')
 def index():
-    return render_template('index.html')
+    if 'username' not in session:
+        session['username'] = generate_username()  # Generate a random username if not set
+    return render_template('index.html', username=session['username'])
 
 @app.route('/send_message', methods=['POST'])
 def send_message():
     data = request.json
-    username = data.get('username')
     message = data.get('message')
+    username = session.get('username')
     if username and message:
         save_message(username, message)
         return jsonify({'status': 'success'})
