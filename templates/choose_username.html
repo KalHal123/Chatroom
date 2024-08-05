@@ -33,6 +33,7 @@
     <h1>Choose Your Username</h1>
     <input type="text" id="username" placeholder="Enter your username" required>
     <button onclick="submitUsername()">Submit</button>
+    <button onclick="resetUsername()">Reset Username</button>
 
     <script>
         function submitUsername() {
@@ -50,6 +51,18 @@
                     window.location.href = '/';  // Redirect to the main message board
                 } else {
                     alert('Error setting username.');
+                }
+            });
+        }
+
+        function resetUsername() {
+            fetch('/reset_username', {
+                method: 'POST'
+            }).then(response => {
+                if (response.ok) {
+                    window.location.href = '/';  // Redirect to the username prompt
+                } else {
+                    alert('Error resetting username.');
                 }
             });
         }
