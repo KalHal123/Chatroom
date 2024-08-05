@@ -10,10 +10,6 @@ app.secret_key = 'your_secret_key'  # Change this to a random secret key
 # File to store messages
 MESSAGE_FILE = 'messages.txt'
 
-# Helper function to generate a random username
-def generate_username():
-    return ''.join(random.choices(string.ascii_letters + string.digits, k=8))
-
 # Load existing messages
 def load_messages():
     if os.path.exists(MESSAGE_FILE):
@@ -31,8 +27,16 @@ def save_message(username, message):
 @app.route('/')
 def index():
     if 'username' not in session:
-        session['username'] = generate_username()  # Generate a random username if not set
+        return render_template('choose_username.html')
     return render_template('index.html', username=session['username'])
+
+@app.route('/set_username', methods=['POST'])
+def set_username():
+    username = request.json.get('username')
+    if username:
+        session['username'] = username
+        return jsonify({'status': 'success'})
+    return jsonify({'status': 'error'}), 400
 
 @app.route('/send_message', methods=['POST'])
 def send_message():

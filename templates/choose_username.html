@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Choose Username</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 400px;
+            margin: auto;
+            background-color: #f4f4f4;
+            padding: 20px;
+            text-align: center;
+        }
+        input, button {
+            margin: 10px 0;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+        }
+        button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <h1>Choose Your Username</h1>
+    <input type="text" id="username" placeholder="Enter your username" required>
+    <button onclick="submitUsername()">Submit</button>
+
+    <script>
+        function submitUsername() {
+            const username = document.getElementById('username').value;
+            if (!username) return alert('Username cannot be empty!');
+
+            fetch('/set_username', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ username }),
+            }).then(response => {
+                if (response.ok) {
+                    window.location.href = '/';  // Redirect to the main message board
+                } else {
+                    alert('Error setting username.');
+                }
+            });
+        }
+    </script>
+</body>
+</html>
