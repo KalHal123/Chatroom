@@ -1,1 +1,4 @@
 *.bat
+app copy.py
+index copy.html
+choose_username copy.html

@@ -30,13 +30,13 @@
             font-size: 0.8em;
             color: #888;
         }
-        input, button {
+        input, button, select {
             margin: 5px 0;
             padding: 10px;
             border-radius: 5px;
             border: 1px solid #ddd;
         }
-        input[type="text"] {
+        input[type="text"], input[type="file"] {
             width: calc(100% - 22px);
         }
         button {
@@ -57,15 +57,23 @@
     </style>
 </head>
 <body>
-    <h1>Message Board</h1>
+    <h1>Message Board - {{ group }}</h1>
     <div id="messages"></div>
-    <input type="text" id="message" placeholder="Enter your message" required>
-    <button onclick="sendMessage()">Send Message</button>
+    <form id="messageForm" enctype="multipart/form-data">
+        <input type="text" id="message" name="message" placeholder="Enter your message" required>
+        <input type="file" id="file" name="file">
+        <button type="submit">Send Message</button>
+    </form>
     <button class="reset-button" onclick="resetUsername()">Reset Username</button>
+    <select id="groupSelect" onchange="changeGroup()">
+        <option value="group1">Group 1</option>
+        <option value="group2">Group 2</option>
+        <option value="group3">Group 3</option>
+    </select>
 
     <script>
         function fetchMessages() {
-            fetch('/get_messages')
+            fetch(`/get_messages/${group}`)
                 .then(response => response.json())
                 .then(data => {
                     const messagesDiv = document.getElementById('messages');
@@ -76,19 +84,16 @@
                 });
         }
 
-        function sendMessage() {
-            const message = document.getElementById('message').value;
-            if (!message) return;
-
-            fetch('/send_message', {
+        function sendMessage(event) {
+            event.preventDefault();
+            const formData = new FormData(document.getElementById('messageForm'));
+            fetch(`/send_message/${group}`, {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ message }),
+                body: formData,
             }).then(response => {
                 if (response.ok) {
                     document.getElementById('message').value = '';
+                    document.getElementById('file').value = '';
                     fetchMessages();
                 } else {
                     alert('Error sending message.');
@@ -101,20 +106,27 @@
                 method: 'POST'
             }).then(response => {
                 if (response.ok) {
-                    window.location.href = '/';  // Redirect to the username prompt
+                    window.location.href = '/choose_username';  // Redirect to the username prompt
                 } else {
                     alert('Error resetting username.');
                 }
             });
         }
 
+        function changeGroup() {
+            const selectedGroup = document.getElementById('groupSelect').value;
+            window.location.href = `/chat/${selectedGroup}`;
+        }
+
+        document.getElementById('messageForm').addEventListener('submit', sendMessage);
         document.getElementById('message').addEventListener('keypress', function(event) {
             if (event.key === 'Enter') {
                 event.preventDefault();
-                sendMessage();
+                sendMessage(event);
             }
         });
 
+        const group = "{{ group }}";
         // Fetch messages on load
         fetchMessages();
         // Refresh messages every 5 seconds
