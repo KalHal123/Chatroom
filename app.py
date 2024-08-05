@@ -16,12 +16,6 @@ if not os.path.exists(LOG_DIR):
 if not os.path.exists(UPLOAD_DIR):
     os.makedirs(UPLOAD_DIR)
 
-# Allowed extensions for file uploads
-ALLOWED_EXTENSIONS = {'txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif'}
-
-def allowed_file(filename):
-    return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
-
 # Load existing messages for a chat group
 def load_messages(group):
     today = datetime.now().strftime('%Y-%m-%d')
@@ -74,17 +68,16 @@ def chat(group):
 
 @app.route('/send_message/<group>', methods=['POST'])
 def send_message(group):
-    data = request.form
-    message = data.get('message')
     username = session.get('username')
-    if 'file' in request.files:
-        file = request.files['file']
-        if file and allowed_file(file.filename):
+    message = request.form.get('message')
+    file = request.files.get('file')
+
+    if username and message:
+        if file:
             filename = secure_filename(file.filename)
             filepath = os.path.join(UPLOAD_DIR, filename)
             file.save(filepath)
             message += f' (File: <a href="/{filepath}">{filename}</a>)'
-    if username and message:
         save_message(group, username, message)
         return redirect(url_for('chat', group=group))
     return jsonify({'status': 'error'}), 400
