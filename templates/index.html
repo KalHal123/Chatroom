@@ -48,6 +48,12 @@
         button:hover {
             background-color: #0056b3;
         }
+        .reset-button {
+            background-color: #dc3545;
+        }
+        .reset-button:hover {
+            background-color: #c82333;
+        }
     </style>
 </head>
 <body>
@@ -55,6 +61,7 @@
     <div id="messages"></div>
     <input type="text" id="message" placeholder="Enter your message" required>
     <button onclick="sendMessage()">Send Message</button>
+    <button class="reset-button" onclick="resetUsername()">Reset Username</button>
 
     <script>
         function fetchMessages() {
@@ -85,6 +92,18 @@
                     fetchMessages();
                 } else {
                     alert('Error sending message.');
+                }
+            });
+        }
+
+        function resetUsername() {
+            fetch('/reset_username', {
+                method: 'POST'
+            }).then(response => {
+                if (response.ok) {
+                    window.location.href = '/';  // Redirect to the username prompt
+                } else {
+                    alert('Error resetting username.');
                 }
             });
         }
