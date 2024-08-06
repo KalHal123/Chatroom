@@ -13,3 +13,13 @@
 2024-08-06 14:09:25 - Thph793 phone: Yeah!! Let's goo!
 2024-08-06 14:11:32 - Thph793: hehe here you go a little minecraft meme I made fy: (File: <a href="/static/uploads\memus_minecrafta_84.mp4">memus_minecrafta_84.mp4</a>)
 2024-08-06 14:11:49 - Thph793: and another meme hehe: (File: <a href="/static/uploads\Minions_Brainrot.mp4">Minions_Brainrot.mp4</a>)
+2024-08-06 14:26:02 - Thph793: k local hosting is on and working and pc lid is not closed
+2024-08-06 14:26:31 - Thph793: messages are being transferd to the log just fine and pretty much instant
+2024-08-06 14:27:00 - Thph793: im gonna close the lid now put it to sleep and see on my phone if it still works
+2024-08-06 14:27:06 - Thph793: would be a wonder
+2024-08-06 14:27:09 - Thph793: wish me luck
+2024-08-06 14:28:03 - Thph793 phone: Good luck
+2024-08-06 14:28:12 - Thph793: closing
+2024-08-06 14:30:08 - Thph793 phone: It wasn't working while being in sleep as soon as the lid was opened it is wprking again astounding
+2024-08-06 14:31:12 - Thph793: ok so the online hosting has it's bugs and benefits. but im gonna look for another service that can maybe write to github
+2024-08-06 14:31:58 - Thph793: im gonna push to github and reload the logs now. they're also gonna be visible in the render hosting then
