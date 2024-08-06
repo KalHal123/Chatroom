@@ -78,7 +78,7 @@ def impress():
 
 @app.route('/license')
 def license():
-    return render_template('license.html')
+    return render_template('LICENSE.html')
 
 if __name__ == '__main__':
     port = int(os.environ.get('PORT', 5000))
