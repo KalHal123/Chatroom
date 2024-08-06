@@ -30,3 +30,9 @@
 2024-08-06 16:36:24 - Thph793: great
 2024-08-06 17:01:02 - Thph793 phone: Note to myself just put the minecrafta memus file in the .gitignore file and even if it doesn't exist it might fix the bug
 2024-08-06 21:19:09 - Thph793: test
+2024-08-06 21:26:35 - Thph793: test message
+2024-08-06 21:26:41 - Thph793: intresting
+2024-08-06 21:27:18 - Thph793: so that's working fine now
+2024-08-06 21:27:27 - Thph793: let's see if it's the same on render
+2024-08-06 21:28:03 - Thph793: also the bug with it not clearing the message field is fixed here now. but I doubt it's gonna be the same on render
+2024-08-06 21:28:08 - Thph793: let's goo
