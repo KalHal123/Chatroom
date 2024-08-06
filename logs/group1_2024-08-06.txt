@@ -29,3 +29,4 @@
 2024-08-06 16:36:19 - Thph793: so now we also got the bug here with the message and files field not being cleared
 2024-08-06 16:36:24 - Thph793: great
 2024-08-06 17:01:02 - Thph793 phone: Note to myself just put the minecrafta memus file in the .gitignore file and even if it doesn't exist it might fix the bug
+2024-08-06 21:19:09 - Thph793: test
