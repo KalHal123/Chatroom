@@ -23,3 +23,4 @@
 2024-08-06 14:30:08 - Thph793 phone: It wasn't working while being in sleep as soon as the lid was opened it is wprking again astounding
 2024-08-06 14:31:12 - Thph793: ok so the online hosting has it's bugs and benefits. but im gonna look for another service that can maybe write to github
 2024-08-06 14:31:58 - Thph793: im gonna push to github and reload the logs now. they're also gonna be visible in the render hosting then
+2024-08-06 14:32:19 - Thph793 phone: Gg
