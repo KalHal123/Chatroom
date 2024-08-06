@@ -7,8 +7,11 @@ app.secret_key = 'oawduhamoiuhiuh&12391864-daohd9184'  # Change this to a random
 
 # Directory for log files
 LOG_DIR = 'logs'
+UPLOAD_DIR = 'static/uploads'
 if not os.path.exists(LOG_DIR):
     os.makedirs(LOG_DIR)
+if not os.path.exists(UPLOAD_DIR):
+    os.makedirs(UPLOAD_DIR)
 
 # Save a new message
 def save_message(group, username, message):
@@ -17,7 +20,6 @@ def save_message(group, username, message):
     timestamp = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
     with open(log_file, 'a') as file:
         file.write(f'{timestamp} - {username}: {message}\n')
-    print(f'Saved message: {timestamp} - {username}: {message}')  # Debug statement
 
 @app.route('/')
 def index():
@@ -42,14 +44,16 @@ def reset_username():
 def send_message(group):
     username = session.get('username')
     message = request.form.get('message')
+    file = request.files.get('file')
 
-    if username and message:
-        try:
+    if username and (message or file):
+        if message:
             save_message(group, username, message)
-            return redirect(url_for('chat', group=group))
-        except Exception as e:
-            print(f'Error sending message: {e}')  # Debug statement
-            return jsonify({'status': 'error', 'message': str(e)}), 500
+        if file:
+            filename = file.filename
+            file_path = os.path.join(UPLOAD_DIR, filename)
+            file.save(file_path)
+        return redirect(url_for('chat', group=group))
     return jsonify({'status': 'error'}), 400
 
 @app.route('/chat/<group>')

@@ -36,3 +36,8 @@
 2024-08-06 21:27:27 - Thph793: let's see if it's the same on render
 2024-08-06 21:28:03 - Thph793: also the bug with it not clearing the message field is fixed here now. but I doubt it's gonna be the same on render
 2024-08-06 21:28:08 - Thph793: let's goo
+2024-08-06 21:28:26 - Thph793 phone: Hehe
+2024-08-06 21:29:53 - Thph793 phone: Im manually redeploying from the latest commit now
+2024-08-06 21:30:02 - Thph793 phone: Let's see how it goes
+2024-08-06 21:40:02 - Thph793: test
+2024-08-06 21:40:26 - Thph793: again here it works now let's go throgh the painfully slow process of testing it on render
