@@ -95,7 +95,7 @@
             }).then(response => {
                 if (response.ok) {
                     document.getElementById('message').value = '';
-                    document.getElementById('file').value = '';
+                    document.getElementById('file').value = null;
                     fetchMessages();
                 } else {
                     alert('Error sending message.');

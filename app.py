@@ -53,7 +53,9 @@ def send_message(group):
             filename = file.filename
             file_path = os.path.join(UPLOAD_DIR, filename)
             file.save(file_path)
-        return redirect(url_for('chat', group=group))
+            file_link = f'/static/uploads/{filename}'
+            save_message(group, username, f'File uploaded: <a href="{file_link}" target="_blank">{filename}</a>')
+        return jsonify({'status': 'success'})
     return jsonify({'status': 'error'}), 400
 
 @app.route('/chat/<group>')
