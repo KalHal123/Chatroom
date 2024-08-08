@@ -1,0 +1,13 @@
+2024-08-08 12:12:21 - Thph793 phone: Test
+2024-08-08 12:12:34 - Thph793 phone: Test
+2024-08-08 12:12:43 - Thph793 phone: Test1
+2024-08-08 12:12:55 - Thph793: hallo
+2024-08-08 12:13:19 - Thph793 phone: Test
+2024-08-08 12:14:00 - Thph793 phone: Hello theophilos!
+2024-08-08 12:14:03 - Thph793: Hi, wie geht's?
+2024-08-08 12:14:16 - Thph793 phone: Ganz gut heute.
+2024-08-08 12:14:24 - Thph793: mir auch
+2024-08-08 12:14:39 - Thph793 phone: Das ist prlma!
+2024-08-08 12:14:48 - Thph793 phone: i
+2024-08-08 12:15:13 - Thph793: hier ist eine datei:
+2024-08-08 12:15:13 - Thph793: File uploaded: <a href="/static/uploads/Mond.png" target="_blank">Mond.png</a>
